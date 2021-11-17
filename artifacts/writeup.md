@@ -1,4 +1,4 @@
-Name: [Alvin Sun]
+Name: [Alvin Sun, Fangzhao Zhang]
 
 ## Question 1
 
