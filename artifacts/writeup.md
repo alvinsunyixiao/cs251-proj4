@@ -1,4 +1,4 @@
-Name: []
+Name: [Alvin Sun]
 
 ## Question 1
 
@@ -13,6 +13,9 @@ signals.
 
 ## Answer 1
 
+Since `b` is known at compile time, the loop can be unrolled with 
+pre-calculated `2 ** i` as compile time constants. Treating the `2 ** i` as constants weights, `sum_of_bits` is just a weighted linear combination of 
+the `bits` signal array.
 
 ## Question 2
 
@@ -20,6 +23,9 @@ Explain, in your own words, the meaning of the `<==` operator.
 
 ## Answer 2
 
+The `<==` operator is an operator combining assigment (`<--`) and constraint
+`===`. Not only does it assign the logic between input and output signals,
+it also generate constraints that verify the correctness of the desired logic.
 
 ## Question 3
 
@@ -36,3 +42,5 @@ Explain why this is invalid.
 
 ## Answer 3
 
+This is invalid because constraints are applied on a non-quadratic expression 
+(`a & 1`:is the non-quadratic term in this expression).

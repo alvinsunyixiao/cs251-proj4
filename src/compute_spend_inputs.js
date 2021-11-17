@@ -74,8 +74,34 @@ Arguments:
  *       path, casted to string-represented integers ("0" or "1").
  */
 function computeInput(depth, transcript, nullifier) {
-    // TODO
-    return {};
+  // TODO
+  results = {"nullifier": nullifier.toString()};
+
+  // build merkle tree
+  tree = new SparseMerkleTree(depth);
+  var coin;
+  for (const c of transcript) {
+    if (c.length === 1) {
+      tree.insert(c[0]);
+    } else {
+      if (c[0] === nullifier) {
+        results["nonce"] = c[1].toString();
+        coin = mimc2(c[0], c[1]);
+      }
+      tree.insert(mimc2(c[0], c[1]));
+    }
+  }
+
+  results["digest"] = tree.digest.toString();
+
+  const path = tree.path(coin);
+
+  for (var i = 0; i < depth; ++i) {
+    results[`sibling[${i}]`] = path[i][0].toString();
+    results[`direction[${i}]`] = path[i][1] ? "1" : "0";
+  }
+
+  return results;
 }
 
 module.exports = { computeInput };
